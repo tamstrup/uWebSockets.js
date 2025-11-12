@@ -9,10 +9,8 @@ jobs:
   build-freebsd:
     runs-on: ubuntu-22.04
     steps:
-      - name: Launch Firecracker VM
-        uses: acj/freebsd-firecracker-action@v0.6.0
+      - name: Launch FreeBSD VM
+        uses: vmactions/freebsd-vm@v1.2.6
         with:
-          pre-run: |
-            echo "Hello from outside VM"
           run: |
             pkg install -y cmake

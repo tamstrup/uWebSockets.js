@@ -17,5 +17,16 @@ jobs:
         uses: vmactions/freebsd-vm@v1.2.6
         with:
           run: |
-            pkg install -y cmake
-            ls -l
+            # Add __linux define and modify OS string
+            echo '#define __linux 1' > build.c.temp
+            cat build.c >> build.c.temp
+            mv build.c.temp build.c
+            sed -i.bak 's|#define OS "linux"|#define OS "freebsd"|' build.c && rm -f build.c.bak
+            sed -i.bak 's/clang-18/clang18/' build.c && rm -f build.c.bak
+            sed -i.bak 's/clang++-18/clang++18/' build.c && rm -f build.c.bak
+            
+            # Install dependencies
+            pkg install -y cmake llvm18 libuv
+            
+            # Build
+            make

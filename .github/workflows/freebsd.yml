@@ -15,4 +15,4 @@ jobs:
           pre-run: |
             echo "Hello from outside VM"
           run: |
-            echo "Hello from INSIDE VM"
+            pkg install -y cmake

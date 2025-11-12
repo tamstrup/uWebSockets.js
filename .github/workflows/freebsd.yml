@@ -1,0 +1,18 @@
+name: Build/Release FreeBSD
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build-freebsd:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Launch Firecracker VM
+        uses: acj/freebsd-firecracker-action@v0.6.0
+        with:
+          pre-run: |
+            echo "Hello from outside VM"
+          run: |
+            echo "Hello from INSIDE VM"

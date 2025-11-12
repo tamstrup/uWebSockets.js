@@ -28,16 +28,6 @@ jobs:
           git checkout master -- tests/smoke.js
           npm install ws
           node tests/smoke.js || true
-  build-freebsd:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Launch Firecracker VM
-        uses: acj/freebsd-firecracker-action@v0.6.0
-        with:
-          pre-run: |
-            echo "Hello from outside VM"
-          run: |
-            echo "Hello from INSIDE VM"
   build-unix:
     runs-on: ${{ matrix.os }}
     strategy:

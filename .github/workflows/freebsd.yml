@@ -28,7 +28,8 @@ jobs:
             sed -i.bak 's/clang-18/clang18/' build.c && rm -f build.c.bak
             sed -i.bak 's/clang++-18/clang++18/' build.c && rm -f build.c.bak
             
-            pkg install -y cmake llvm18 libuv v8 curl git ||
+            pkg install -y cmake llvm18 libuv v8 curl git \
+              node22 npm-node22 ||
               echo 'cannot install packages, no privileges'
             
             make

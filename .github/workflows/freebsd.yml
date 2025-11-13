@@ -16,6 +16,7 @@ jobs:
       - name: Build node modules
         uses: vmactions/freebsd-vm@v1.2.6
         with:
+          copyback: false
           run: |       
             set -e
             set -o pipefail

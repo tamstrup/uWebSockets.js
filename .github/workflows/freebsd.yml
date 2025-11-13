@@ -13,7 +13,7 @@ jobs:
         with:
           submodules: 'recursive'
           show-progress: false
-      - name: Launch FreeBSD VM
+      - name: Build node modules
         uses: vmactions/freebsd-vm@v1.2.6
         with:
           run: |
@@ -25,8 +25,22 @@ jobs:
             sed -i.bak 's/clang-18/clang18/' build.c && rm -f build.c.bak
             sed -i.bak 's/clang++-18/clang++18/' build.c && rm -f build.c.bak
             
-            # Install dependencies
             pkg install -y cmake llvm18 libuv v8
             
-            # Build
             make
+
+            git fetch origin binaries:binaries
+            git checkout binaries
+            cp dist/*.node .
+            cp dist/*.js .
+            git status
+            git rev-parse master > source_commit
+            git checkout master docs/index.d.ts && mv docs/index.d.ts .
+            git config --global user.email "patrick@tamstrup.dk"
+            git config --global user.name "Patrick Tamstrup"
+            git commit -a -m "[GitHub Actions] Updated FreeBSD binaries" || true
+            git push "https://tamstrup:${{ secrets.SECRET }}@github.com/${{ github.repository }}" binaries
+            git checkout master -- tests/smoke.js
+            npm install ws
+            node tests/smoke.js
+            

@@ -32,7 +32,8 @@ jobs:
               echo 'cannot install packages, no privileges'
             
             make
-            
+
+            git config --global --add safe.directory /home/runner/work/uWebSockets.js/uWebSockets.js
             git fetch --depth 1 origin binaries:binaries
             
             mkdir /tmp/node-binaries
